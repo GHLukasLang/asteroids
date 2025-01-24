@@ -7,6 +7,8 @@ from circleshape import *
 
 
 
+
+
 def main():
     pygame.init()
 
@@ -35,7 +37,7 @@ def main():
 
     clock = pygame.time.Clock()
     dt = 0
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
     
     
     ########NEW STUFF

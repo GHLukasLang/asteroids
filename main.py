@@ -18,10 +18,6 @@ def set_fullscreen_mode():
 def main():
     pygame.init()
 
-    print("Starting asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
-
    
     ##########GROUPS AND CONTAINERS##########
 
@@ -44,8 +40,7 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     screen = set_fullscreen_mode()
-    #before i had:
-    # screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+   
     
     
     ########NEW STUFF
@@ -66,16 +61,18 @@ def main():
         "down": pygame.K_s,
         'shoot': pygame.K_SPACE
     }
+
+    #player color
+    player_1_color = "red"
+    player_2_color = "blue"
     
     screen_width, screen_height = pygame.display.get_surface().get_size()  # Get the actual screen size
 
-    player1 = Player(screen_width/4, screen_height / 2, player1_controls)
-    player2 = Player(3*screen_width/4, screen_height / 2, player2_controls)
+    player1 = Player(screen_width/4, screen_height / 2, player1_controls, player_1_color)
+    player2 = Player(3*screen_width/4, screen_height / 2, player2_controls, player_2_color)
     ##########################
 
-    #player_1 = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT)
-    #player_2 = Player(SCREEN_WIDTH, SCREEN_HEIGHT /2)
-    #field = AsteroidField()
+    
     field = AsteroidField(screen_width, screen_height)
 
     ##########WHILE LOOP##########

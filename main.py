@@ -6,6 +6,12 @@ from asteroidfield import *
 from circleshape import *
 
 
+## IN ORDER TO HAVE FULLSCREEN
+def set_fullscreen_mode():
+    # get the current resultion
+    info = pygame.display.Info()
+    screen_width, screen_height = info.current_w, info.current_h
+    return pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 
 
 
@@ -37,7 +43,9 @@ def main():
 
     clock = pygame.time.Clock()
     dt = 0
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+    screen = set_fullscreen_mode()
+    #before i had:
+    # screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
     
     
     ########NEW STUFF
@@ -59,14 +67,16 @@ def main():
         'shoot': pygame.K_SPACE
     }
     
-    player1 = Player(SCREEN_WIDTH/4, SCREEN_HEIGHT / 2, player1_controls)
-    player2 = Player(3*SCREEN_WIDTH/4, SCREEN_HEIGHT / 2, player2_controls)
+    screen_width, screen_height = pygame.display.get_surface().get_size()  # Get the actual screen size
+
+    player1 = Player(screen_width/4, screen_height / 2, player1_controls)
+    player2 = Player(3*screen_width/4, screen_height / 2, player2_controls)
     ##########################
 
     #player_1 = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT)
     #player_2 = Player(SCREEN_WIDTH, SCREEN_HEIGHT /2)
-    field = AsteroidField()
-
+    #field = AsteroidField()
+    field = AsteroidField(screen_width, screen_height)
 
     ##########WHILE LOOP##########
     

@@ -29,13 +29,40 @@ def main():
 
     AsteroidField.containers = (updateable)
 
+    
 
     ##########INITAL VARIABLES##########
 
     clock = pygame.time.Clock()
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT /2)
+    
+    
+    ########NEW STUFF
+    # Player 1 controls (arrow keys and spacebar)
+    player1_controls = {
+        'left': pygame.K_LEFT,
+        'right': pygame.K_RIGHT,
+        'up': pygame.K_UP,
+        "down": pygame.K_DOWN,
+        'shoot': pygame.K_RCTRL
+    }
+    
+    # Player 2 controls (WASD and Enter for shooting)
+    player2_controls = {
+        'left': pygame.K_a,
+        'right': pygame.K_d,
+        'up': pygame.K_w,
+        "down": pygame.K_s,
+        'shoot': pygame.K_SPACE
+    }
+    
+    player1 = Player(SCREEN_WIDTH/4, SCREEN_HEIGHT / 2, player1_controls)
+    player2 = Player(3*SCREEN_WIDTH/4, SCREEN_HEIGHT / 2, player2_controls)
+    ##########################
+
+    #player_1 = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT)
+    #player_2 = Player(SCREEN_WIDTH, SCREEN_HEIGHT /2)
     field = AsteroidField()
 
 
@@ -59,16 +86,31 @@ def main():
 
         #check for player-asteroid-collisions
         for roids in asteroids:
-            if roids.collision(player):
+            if roids.collision(player1) or roids.collision(player2):
                 print("Game over!")
                 return
         
+        #check for player-player-collisions
+        if player1.collision(player2):
+            print("Game over!")
+            return
+        if player2.collision(player1):
+            print("Game over!")
+            return
+
+
         #check for bullet-asteroid-collisions, remove bullet, split asteroid
         for asteroid in asteroids:    
             for bullet in shots:
                 if bullet.collision(asteroid):
                     bullet.kill()
                     asteroid.split()
+        
+        ##doesnt work yet! bullets overlap with the shooting player. solve by spawning shots outside of player-collision box?
+        for bullet in shots:
+            if bullet.collision(player1) or bullet.collision(player2):
+                print("Game over!")
+                return
 
         #redraw everything
         for drawables in drawable:
